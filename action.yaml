@@ -1,18 +1,21 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  package-name: 
+  package-name:
     description: 'The package name'
     required: true
-  package-version: 
+  package-version:
     description: 'The package version'
     required: true
-  python-version: 
+  python-version:
     description: 'The python version'
     required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
+  closed-valid-version:
+    description:
+      The closed valid package version given the input package version
 runs:
   using: 'node20'
   main: 'src/main.js'
