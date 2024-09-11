@@ -17,6 +17,10 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
       - name: Hello world action step
         id: hello
         uses: ./
