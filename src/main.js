@@ -1,6 +1,6 @@
-import { findClosestVersion } from './validation.js'
-
 const core = require('@actions/core')
+
+import { findClosestVersion } from './validation.js'
 
 try {
   const pkgName = core.getInput('package-name')
