@@ -1,7 +1,6 @@
 const deps = new Map()
 deps.set(
-  'numpy',
-  Map([
+  'numpy', new Map([
     ['3.12', ['1.26.0', null]],
     ['3.11', ['1.23.2', null]],
     ['3.10', ['1.21.3', null]],
