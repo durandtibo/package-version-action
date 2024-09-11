@@ -1,3 +1,5 @@
+import { findClosestVersion } from './validation.js'
+
 const core = require('@actions/core')
 
 try {
@@ -8,7 +10,8 @@ try {
     `pkgName: ${pkgName}\npkgVersion: ${pkgVersion}\npythonVersion: ${pythonVersion}`
   )
 
-  core.setOutput('closest-valid-version', pkgVersion)
+  closestPkgVersion = findClosestVersion(pkgName, pkgVersion, pythonVersion)
+  core.setOutput('closest-valid-version', closestPkgVersion)
 
   const time = new Date().toTimeString()
   core.setOutput('time', time)
