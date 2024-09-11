@@ -1,4 +1,4 @@
-name: Debug
+name: CI
 on:
   pull_request:
     branches:
@@ -9,9 +9,8 @@ on:
   workflow_dispatch: # to trigger manually
 
 jobs:
-  hello_world_job:
+  debug:
     runs-on: ubuntu-latest
-    name: A job to say hello
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,11 +18,17 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - name: Hello world action step
-        id: hello
+      - name: Check package version
+        id: package
         uses: ./
         with:
-          who-to-greet: 'Mona the Octocat'
+          package-name: 'numpy'
+          package-version: '2.0.2'
+          python-version: '3.11'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+      - name: Get the package version
+        run:
+          echo "Best package version ${{
+          steps.package.outputs.closest-valid-version }}"
