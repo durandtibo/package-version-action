@@ -23,9 +23,9 @@ jobs:
         id: hello
         uses: ./
         with:
-          who-to-greet: 'Mona the Octocat'
           package-name: 'numpy'
           package-version: '2.0.2'
+          python-version: '3.11'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
