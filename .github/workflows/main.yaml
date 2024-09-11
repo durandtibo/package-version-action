@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - name: Hello world action step
-        id: hello
+      - name: Check package version
+        id: package
         uses: ./
         with:
           package-name: 'numpy'
@@ -29,3 +29,7 @@ jobs:
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+      - name: Get the package version
+        run:
+          echo "Best package version ${{
+          steps.package.outputs.closest-valid-version }}"
