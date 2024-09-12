@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 jobs:
-  test-javascript:
-    name: JavaScript Tests
+  test-code:
+    name: Code Tests
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -58,7 +58,7 @@ jobs:
         run: npm run ci-test
 
   test-action:
-    name: GitHub Actions Test
+    name: Action Tests
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
