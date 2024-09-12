@@ -1,4 +1,4 @@
-import { findClosestVersion } from './validation.js'
+import findClosestVersion from 'validation'
 
 const core = require('@actions/core')
 
