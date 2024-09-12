@@ -32,7 +32,7 @@ jobs:
             macos-13,
             macos-12
           ]
-        node-version: ['latest', '20']
+        node-version: ['latest', '22', '21', '20']
 
     steps:
       - name: Checkout
@@ -59,7 +59,24 @@ jobs:
 
   test-action:
     name: GitHub Actions Test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-24.04,
+            ubuntu-22.04,
+            ubuntu-20.04,
+            macos-latest,
+            macos-14,
+            macos-13,
+            macos-12
+          ]
+        node-version: ['latest', '22', '21', '20']
 
     steps:
       - name: Checkout
@@ -67,14 +84,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ matrix.python-version }}
           cache: npm
 
       - name: Install Dependencies
         run: npm ci
 
       - name: Test Local Action
-        id: package
+        id: test-action
         uses: ./
         with:
           package-name: 'numpy'
@@ -84,5 +101,5 @@ jobs:
       - name: Print Output
         id: output
         run: |
-          echo "closest-valid-version ${{ steps.package.outputs.closest-valid-version }}"
-          echo "is-valid-version ${{ steps.package.outputs.is-valid-version }}"
+          echo "closest-valid-version ${{ steps.test-action.outputs.closest-valid-version }}"
+          echo "is-valid-version ${{ steps.test-action.outputs.is-valid-version }}"
