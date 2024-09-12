@@ -1,4 +1,5 @@
 const core = require('@actions/core')
+const semver = require('semver')
 
 // Extra argument for printing with indentation
 function printMap(map, tab = '') {
@@ -39,6 +40,12 @@ function findConfig(pkgName, pythonVersion, allConfigs) {
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
   const [minVersion, maxVersion] = findConfig(pkgName, pythonVersion, deps)
   console.log(`${minVersion}  ${maxVersion}`)
+  if (minVersion === null && maxVersion === null) {
+    return pkgVersion
+  }
+  if (minVersion === null) {
+    return semver.lte(pkgVersion, maxVersion) ? pkgVersion : maxVersion
+  }
   return pkgVersion
 }
 
