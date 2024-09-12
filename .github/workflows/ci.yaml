@@ -14,98 +14,10 @@ permissions:
 
 jobs:
   test-code:
-    name: Code Tests
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os:
-          [
-            ubuntu-latest,
-            ubuntu-24.04,
-            ubuntu-22.04,
-            ubuntu-20.04,
-            macos-latest,
-            macos-14,
-            macos-13,
-            macos-12
-          ]
-        node-version: ['latest', '22', '21', '20']
+    uses: ./.github/workflows/test-code.yaml
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.python-version }}
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Check Format
-        run: npm run format:check
-
-      # - name: Lint
-      #   id: npm-lint
-      #   run: npm run lint
-
-      - name: Test
-        run: npm run ci-test
-
-  test-action:
-    name: Action Tests
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os:
-          [
-            ubuntu-latest,
-            ubuntu-24.04,
-            ubuntu-22.04,
-            ubuntu-20.04,
-            macos-latest,
-            macos-14,
-            macos-13,
-            macos-12
-          ]
-        node-version: ['latest', '22', '21', '20']
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.python-version }}
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Local Action
-        id: local-action
-        uses: ./
-        with:
-          package-name: 'numpy'
-          package-version: '2.0.2'
-          python-version: '3.11'
-
-      - name: Print Output
-        run: echo '${{ toJSON(steps.local-action.outputs) }}'
-
-      - name: Set up Python
-        if: "${{ steps.local-action.outputs.is-valid-version == 'true' }}"
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.11
+  test-local-action:
+    uses: ./.github/workflows/test-local-action.yaml
 
   test-install-local:
     uses: ./.github/workflows/test-install-local.yaml
