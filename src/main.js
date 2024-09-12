@@ -1,22 +1,18 @@
 const core = require('@actions/core')
 
-const convertMapToObjDeeply = o => {
-  const recurseOnEntries = a => Object.fromEntries(
-    a.map(([k, v]) => [k, convertMapToObjDeeply(v)])
-  );
-  
-  if (o instanceof Map) {
-    return recurseOnEntries([...o]);
+
+// Extra argument for printing with indentation
+function printMap(map, tab="") { 
+  for (const [k, v] of map.entries()) {
+    // Don't print here yet...
+    if (v instanceof Map) {
+      console.log(`${tab}${k}:`); // Only print the key here...
+      printMap(v, tab + "    "); // ...as recursion will take care of the value(s)
+    } else {
+      console.log(`${tab}${k} = ${v}`);
+    }
   }
-  else if (Array.isArray(o)) {
-    return o.map(convertMapToObjDeeply);
-  }
-  else if (typeof o === "object" && o !== null) {
-    return recurseOnEntries(Object.entries(o));
-  }
-  
-  return o;
-};
+}
 
 const deps = new Map()
 deps.set(
@@ -31,7 +27,7 @@ deps.set(
 
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
   
-  console.log(`${convertMapToObjDeeply(deps)}`)
+  console.log(`${printMap(deps)}`)
   return pkgVersion
 }
 
