@@ -1,15 +1,14 @@
 const core = require('@actions/core')
 
-
 // Extra argument for printing with indentation
-function printMap(map, tab="") { 
+function printMap(map, tab = '') {
   for (const [k, v] of map.entries()) {
     // Don't print here yet...
     if (v instanceof Map) {
-      console.log(`${tab}${k}:`); // Only print the key here...
-      printMap(v, tab + "    "); // ...as recursion will take care of the value(s)
+      console.log(`${tab}${k}:`) // Only print the key here...
+      printMap(v, tab + '    ') // ...as recursion will take care of the value(s)
     } else {
-      console.log(`${tab}${k} = ${v}`);
+      console.log(`${tab}${k} = ${v}`)
     }
   }
 }
@@ -26,8 +25,11 @@ deps.set(
 )
 
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
-  
   console.log(`${printMap(deps)}`)
+  if (!deps.has(pkgName)) {
+    return pkgVersion
+  }
+  console.log(`${deps.getKey(pkgName)}`)
   return pkgVersion
 }
 
