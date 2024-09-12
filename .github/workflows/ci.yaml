@@ -90,8 +90,8 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Test Local Action
-        id: test-action
+      - name: Run Local Action
+        id: local-action
         uses: ./
         with:
           package-name: 'numpy'
@@ -99,4 +99,4 @@ jobs:
           python-version: '3.11'
 
       - name: Print Output
-        run: echo '${{ toJSON(steps.test-action.outputs) }}'
+        run: echo '${{ toJSON(steps.local-action.outputs) }}'
