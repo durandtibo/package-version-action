@@ -27,18 +27,18 @@ deps.set(
 function findConfig(pkgName, pythonVersion, allConfigs) {
   console.log(`${printMap(allConfigs)}`)
   if (!allConfigs.has(pkgName)) {
-    return new Map()
+    return [null, null]
   }
   const pkgConfig = allConfigs.get(pkgName)
   if (!pkgConfig.has(pythonVersion)) {
-    return new Map()
+    return [null, null]
   }
   return pkgConfig.get(pythonVersion)
 }
 
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
-  config = findConfig(pkgName, pythonVersion, deps)
-  console.log(`${printMap(config)}`)
+  const [minVersion, maxVersion] = findConfig(pkgName, pythonVersion, deps)
+  console.log(`${minVersion}  ${maxVersion}`)
   return pkgVersion
 }
 
