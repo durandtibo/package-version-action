@@ -12,7 +12,8 @@ deps.set(
 )
 
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
-  console.log(`${deps}`)
+  
+  console.log(`${[...deps.entries()]}`)
   return pkgVersion
 }
 
