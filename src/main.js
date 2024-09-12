@@ -24,12 +24,12 @@ deps.set(
   ])
 )
 
-function findConfig(pkgName, pythonVersion) {
-  console.log(`${printMap(deps)}`)
-  if (!deps.has(pkgName)) {
+function findConfig(pkgName, pythonVersion, allConfigs) {
+  console.log(`${printMap(allConfig)}`)
+  if (!allConfigs.has(pkgName)) {
     return new Map()
   }
-  const pkgConfig = deps.get(pkgName)
+  const pkgConfig = allConfigs.get(pkgName)
   if (!pkgConfig.has(pythonVersion)) {
     return new Map()
   }
@@ -37,7 +37,7 @@ function findConfig(pkgName, pythonVersion) {
 }
 
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
-  config = findConfig(pkgName, pythonVersion)
+  config = findConfig(pkgName, pythonVersion, deps)
   console.log(`${printMap(config)}`)
   return pkgVersion
 }
