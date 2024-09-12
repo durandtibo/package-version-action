@@ -6,10 +6,10 @@ function printMap(map, tab = '') {
   for (const [k, v] of map.entries()) {
     // Don't print here yet...
     if (v instanceof Map) {
-      core.debug(`${tab}${k}:`) // Only print the key here...
+      core.info(`${tab}${k}:`) // Only print the key here...
       printMap(v, tab + '    ') // ...as recursion will take care of the value(s)
     } else {
-      core.debug(`${tab}${k} = ${v}`)
+      core.info(`${tab}${k} = ${v}`)
     }
   }
 }
@@ -42,7 +42,7 @@ function findClosestVersion(pkgName, pkgVersion, pythonVersion, allConfigs) {
     pythonVersion,
     allConfigs
   )
-  core.debug(`${minVersion}  ${maxVersion}`)
+  core.info(`${minVersion}  ${maxVersion}`)
   if (minVersion === null && maxVersion === null) {
     return pkgVersion
   }
@@ -66,7 +66,7 @@ async function run() {
     const pkgName = core.getInput('package-name')
     const pkgVersion = core.getInput('package-version')
     const pythonVersion = core.getInput('python-version')
-    core.debug(
+    core.info(
       `pkgName: ${pkgName}\npkgVersion: ${pkgVersion}\npythonVersion: ${pythonVersion}`
     )
 
@@ -76,7 +76,7 @@ async function run() {
       pythonVersion,
       deps
     )
-    core.debug(`closestPkgVersion ${closestPkgVersion}`)
+    core.info(`closestPkgVersion ${closestPkgVersion}`)
     core.setOutput('closest-valid-version', closestPkgVersion)
   } catch (error) {
     core.setFailed(error.message)
