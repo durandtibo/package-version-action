@@ -106,3 +106,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.11
+
+  test-install-local:
+    uses: ./.github/workflows/test-install-local.yaml
