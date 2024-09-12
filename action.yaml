@@ -11,8 +11,10 @@ inputs:
     description: 'The python version'
     required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  is-valid-version:
+    description:
+      'Boolean value that indicates if the input package version is valid (true)
+      or not (false) for the given python version'
   closed-valid-version:
     description:
       'The closed valid package version given the input package version'
