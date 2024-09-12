@@ -99,7 +99,4 @@ jobs:
           python-version: '3.11'
 
       - name: Print Output
-        id: output
-        run: |
-          echo ${{ steps.test-action.outputs.closest-valid-version }}
-          echo ${{ steps.test-action.outputs.is-valid-version }}
+        run: echo '${{ toJSON(steps.test-action.outputs) }}'
