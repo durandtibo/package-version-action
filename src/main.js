@@ -29,7 +29,7 @@ function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
   if (!deps.has(pkgName)) {
     return pkgVersion
   }
-  console.log(`${deps.getKey(pkgName)}`)
+  console.log(`${deps.get(pkgName)}`)
   return pkgVersion
 }
 
