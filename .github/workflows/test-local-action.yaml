@@ -5,7 +5,6 @@ on:
 
 jobs:
   test-local-action:
-    name: Action Tests
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -31,7 +30,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.python-version }}
+          node-version: ${{ matrix.node-version }}
           cache: npm
 
       - name: Install Dependencies
