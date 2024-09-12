@@ -6,10 +6,10 @@ function printMap(map, tab = '') {
   for (const [k, v] of map.entries()) {
     // Don't print here yet...
     if (v instanceof Map) {
-      console.log(`${tab}${k}:`) // Only print the key here...
+      core.debug(`${tab}${k}:`) // Only print the key here...
       printMap(v, tab + '    ') // ...as recursion will take care of the value(s)
     } else {
-      console.log(`${tab}${k} = ${v}`)
+      core.debug(`${tab}${k} = ${v}`)
     }
   }
 }
@@ -42,7 +42,7 @@ function findClosestVersion(pkgName, pkgVersion, pythonVersion, allConfigs) {
     pythonVersion,
     allConfigs
   )
-  console.log(`${minVersion}  ${maxVersion}`)
+  core.debug(`${minVersion}  ${maxVersion}`)
   if (minVersion === null && maxVersion === null) {
     return pkgVersion
   }
@@ -61,31 +61,31 @@ function findClosestVersion(pkgName, pkgVersion, pythonVersion, allConfigs) {
   return pkgVersion
 }
 
-try {
-  const pkgName = core.getInput('package-name')
-  const pkgVersion = core.getInput('package-version')
-  const pythonVersion = core.getInput('python-version')
-  console.log(
-    `pkgName: ${pkgName}\npkgVersion: ${pkgVersion}\npythonVersion: ${pythonVersion}`
-  )
+async function run() {
+  try {
+    const pkgName = core.getInput('package-name')
+    const pkgVersion = core.getInput('package-version')
+    const pythonVersion = core.getInput('python-version')
+    core.debug(
+      `pkgName: ${pkgName}\npkgVersion: ${pkgVersion}\npythonVersion: ${pythonVersion}`
+    )
 
-  closestPkgVersion = findClosestVersion(
-    pkgName,
-    pkgVersion,
-    pythonVersion,
-    deps
-  )
-  console.log(`closestPkgVersion ${closestPkgVersion}`)
-  core.setOutput('closest-valid-version', closestPkgVersion)
-
-  const time = new Date().toTimeString()
-  core.setOutput('time', time)
-} catch (error) {
-  core.setFailed(error.message)
+    closestPkgVersion = findClosestVersion(
+      pkgName,
+      pkgVersion,
+      pythonVersion,
+      deps
+    )
+    core.debug(`closestPkgVersion ${closestPkgVersion}`)
+    core.setOutput('closest-valid-version', closestPkgVersion)
+  } catch (error) {
+    core.setFailed(error.message)
+  }
 }
 
 module.exports = {
   findConfig: findConfig,
   findClosestVersion: findClosestVersion,
-  printMap: printMap
+  printMap: printMap,
+  run: run
 }

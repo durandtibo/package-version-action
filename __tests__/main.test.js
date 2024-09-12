@@ -29,6 +29,12 @@ test('find config missing package', () => {
   ).toStrictEqual([null, null])
 })
 
+test('find config missing python version', () => {
+  expect(
+    findConfig('my_package', '3.11', new Map([['my_package', new Map()]]))
+  ).toStrictEqual([null, null])
+})
+
 test('find config exist min', () => {
   expect(findConfig('my_package', '3.12', mockAllConfig)).toStrictEqual([
     '1.5.0',
