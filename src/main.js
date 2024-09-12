@@ -1,5 +1,23 @@
 const core = require('@actions/core')
 
+const convertMapToObjDeeply = o => {
+  const recurseOnEntries = a => Object.fromEntries(
+    a.map(([k, v]) => [k, convertMapToObjDeeply(v)])
+  );
+  
+  if (o instanceof Map) {
+    return recurseOnEntries([...o]);
+  }
+  else if (Array.isArray(o)) {
+    return o.map(convertMapToObjDeeply);
+  }
+  else if (typeof o === "object" && o !== null) {
+    return recurseOnEntries(Object.entries(o));
+  }
+  
+  return o;
+};
+
 const deps = new Map()
 deps.set(
   'numpy',
@@ -13,7 +31,7 @@ deps.set(
 
 function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
   
-  console.log(`${[...deps.entries()]}`)
+  console.log(`${convertMapToObjDeeply(deps)}`)
   return pkgVersion
 }
 
