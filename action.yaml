@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Find closest valid package version'
+description: 'Find the closest valid package version for a given python version'
 inputs:
   package-name:
     description: 'The package name'
