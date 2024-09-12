@@ -47,7 +47,7 @@ function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
     return semver.lte(pkgVersion, maxVersion) ? pkgVersion : maxVersion
   }
   if (maxVersion === null) {
-    return semver.gte(minVersion, pkgVersion) ? pkgVersion : minVersion
+    return semver.gte(pkgVersion, minVersion) ? pkgVersion : minVersion
   }
   if (semver.gt(pkgVersion, maxVersion)) {
     return maxVersion
