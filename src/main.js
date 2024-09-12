@@ -25,7 +25,7 @@ deps.set(
 )
 
 function findConfig(pkgName, pythonVersion, allConfigs) {
-  console.log(`${printMap(allConfig)}`)
+  console.log(`${printMap(allConfigs)}`)
   if (!allConfigs.has(pkgName)) {
     return new Map()
   }
