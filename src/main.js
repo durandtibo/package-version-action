@@ -26,7 +26,6 @@ deps.set(
 )
 
 function findConfig(pkgName, pythonVersion, allConfigs) {
-  console.log(`${printMap(allConfigs)}`)
   if (!allConfigs.has(pkgName)) {
     return [null, null]
   }
@@ -37,8 +36,12 @@ function findConfig(pkgName, pythonVersion, allConfigs) {
   return pkgConfig.get(pythonVersion)
 }
 
-function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
-  const [minVersion, maxVersion] = findConfig(pkgName, pythonVersion, deps)
+function findClosestVersion(pkgName, pkgVersion, pythonVersion, allConfigs) {
+  const [minVersion, maxVersion] = findConfig(
+    pkgName,
+    pythonVersion,
+    allConfigs
+  )
   console.log(`${minVersion}  ${maxVersion}`)
   if (minVersion === null && maxVersion === null) {
     return pkgVersion
@@ -66,7 +69,12 @@ try {
     `pkgName: ${pkgName}\npkgVersion: ${pkgVersion}\npythonVersion: ${pythonVersion}`
   )
 
-  closestPkgVersion = findClosestVersion(pkgName, pkgVersion, pythonVersion)
+  closestPkgVersion = findClosestVersion(
+    pkgName,
+    pkgVersion,
+    pythonVersion,
+    deps
+  )
   console.log(`closestPkgVersion ${closestPkgVersion}`)
   core.setOutput('closest-valid-version', closestPkgVersion)
 
@@ -74,4 +82,10 @@ try {
   core.setOutput('time', time)
 } catch (error) {
   core.setFailed(error.message)
+}
+
+module.exports = {
+  findConfig: findConfig,
+  findClosestVersion: findClosestVersion,
+  printMap: printMap
 }
