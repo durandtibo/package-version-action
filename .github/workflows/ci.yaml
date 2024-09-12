@@ -99,4 +99,4 @@ jobs:
           python-version: '3.11'
 
       - name: Print Output
-        run: echo '${{ toJSON(test-action.steps.local-action.outputs) }}'
+        run: echo '${{ toJSON(steps.local-action.outputs) }}'
