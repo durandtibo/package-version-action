@@ -210,4 +210,25 @@ describe('action', () => {
     )
     expect(setOutputMock).toHaveBeenNthCalledWith(2, 'is-valid-version', false)
   })
+
+  it('fails if no input is provided', async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'package-name':
+          throw new Error('Input required and not supplied')
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Verify that all of the core library functions were called correctly
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      'Input required and not supplied'
+    )
+  })
 })
