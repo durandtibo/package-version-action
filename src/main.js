@@ -46,6 +46,15 @@ function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
   if (minVersion === null) {
     return semver.lte(pkgVersion, maxVersion) ? pkgVersion : maxVersion
   }
+  if (maxVersion === null) {
+    return semver.gte(minVersion, pkgVersion) ? pkgVersion : minVersion
+  }
+  if (semver.gt(pkgVersion, maxVersion)) {
+    return maxVersion
+  }
+  if (semver.lt(pkgVersion, minVersion)) {
+    return minVersion
+  }
   return pkgVersion
 }
 
@@ -58,6 +67,7 @@ try {
   )
 
   closestPkgVersion = findClosestVersion(pkgName, pkgVersion, pythonVersion)
+  console.log(`closestPkgVersion ${closestPkgVersion}`)
   core.setOutput('closest-valid-version', closestPkgVersion)
 
   const time = new Date().toTimeString()
