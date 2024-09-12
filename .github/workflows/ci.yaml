@@ -101,5 +101,5 @@ jobs:
       - name: Print Output
         id: output
         run: |
-          echo "closest-valid-version ${{ steps.test-action.outputs.closest-valid-version }}"
-          echo "is-valid-version ${{ steps.test-action.outputs.is-valid-version }}"
+          echo -e "closest-valid-version ${{ steps.test-action.outputs.closest-valid-version }}"
+          echo -e "is-valid-version ${{ steps.test-action.outputs.is-valid-version }}"
