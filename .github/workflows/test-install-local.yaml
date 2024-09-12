@@ -1,0 +1,55 @@
+name: Package Install Tests
+on:
+  workflow_call:
+  workflow_dispatch: # to trigger manually
+
+jobs:
+  numpy:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ['3.12', '3.11', '3.10', '3.9']
+        numpy-version:
+          [2.1.0, 2.0.2, 1.26.4, 1.25.2, 1.24.3, 1.23.5, 1.22.4, 1.21.6]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Local Action
+        id: local-action
+        uses: ./
+        with:
+          package-name: 'numpy'
+          package-version: ${{ matrix.numpy-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Print closest version
+        run: echo '${{ toJSON(steps.local-action.outputs) }}'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package (original)
+        if: "${{ steps.local-action.outputs.is-valid-version == 'true' }}"
+        run: |
+          pip install coola numpy==${{ matrix.numpy-version }}
+
+      - name: Install package (closest)
+        if: "${{ steps.local-action.outputs.is-valid-version == 'false' }}"
+        run: |
+          pip install coola numpy==${{ steps.local-action.outputs.closest-valid-version }}

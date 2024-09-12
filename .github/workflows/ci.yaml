@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch: # to trigger manually
+
+permissions:
+  contents: read
+
+jobs:
+  test-code:
+    uses: ./.github/workflows/test-code.yaml
+
+  test-local-action:
+    uses: ./.github/workflows/test-local-action.yaml
+
+  test-install-local:
+    uses: ./.github/workflows/test-install-local.yaml

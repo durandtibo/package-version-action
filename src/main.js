@@ -15,6 +15,7 @@ function printMap(map, tab = '') {
 }
 
 const deps = new Map()
+// https://numpy.org/devdocs/release.html
 deps.set(
   'numpy',
   new Map([
@@ -90,3 +91,5 @@ module.exports = {
   printMap: printMap,
   run: run
 }
+
+run()

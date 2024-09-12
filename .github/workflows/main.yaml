@@ -25,14 +25,6 @@ jobs:
           package-name: 'numpy'
           package-version: '2.0.2'
           python-version: '3.11'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
-      - name: Get the package version
-        run:
-          echo "Best package version ${{
-          steps.package.outputs.closest-valid-version }}"
-
       - name: Check package version
         uses: ./
         with:
