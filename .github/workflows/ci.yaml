@@ -100,3 +100,9 @@ jobs:
 
       - name: Print Output
         run: echo '${{ toJSON(steps.local-action.outputs) }}'
+
+      - name: Set up Python
+        if: "${{ steps.local-action.outputs.is-valid-version == 'true' }}"
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11

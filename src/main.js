@@ -91,3 +91,5 @@ module.exports = {
   printMap: printMap,
   run: run
 }
+
+run()
