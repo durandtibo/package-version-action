@@ -36,6 +36,9 @@ jobs:
           package-version: ${{ matrix.numpy-version }}
           python-version: ${{ matrix.python-version }}
 
+      - name: Print closest version
+        run: echo '${{ toJSON(steps.local-action.outputs) }}'
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
