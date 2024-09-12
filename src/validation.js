@@ -9,7 +9,9 @@ deps.set(
   ])
 )
 
-export function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
+function findClosestVersion(pkgName, pkgVersion, pythonVersion) {
   console.log(`${deps}`)
   return pkgVersion
 }
+
+export default findClosestVersion
